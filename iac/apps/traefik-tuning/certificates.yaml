@@ -14,8 +14,8 @@ spec:
     - key encipherment
     - server auth
   dnsNames:
-    - myapps.minipc.local # <--- Домен для сертификата
-    - minipc.local
+    - myapps.archonmac.local # <--- Домен для сертификата
+    - archonmac.local
   issuerRef:
     name: selfsigned-issuer # <--- Имя вашего ClusterIssuer (selfsigned-issuer)
     kind: ClusterIssuer
@@ -36,7 +36,7 @@ spec:
     - key encipherment
     - server auth
   dnsNames:
-    - loki.minipc.local # <--- Домен для сертификата
+    - loki.archonmac.local # <--- Домен для сертификата
   issuerRef:
     name: selfsigned-issuer # <--- Имя вашего ClusterIssuer (selfsigned-issuer)
     kind: ClusterIssuer

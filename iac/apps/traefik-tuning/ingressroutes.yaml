@@ -8,7 +8,7 @@ spec:
     - websecure
   routes:
     # Маршрут для Grafana
-    - match: Host(`myapps.minipc.local`) || Host(`minipc.local`) && PathPrefix(`/grafana`)
+    - match: Host(`myapps.archonmac.local`) || Host(`archonmac.local`) && PathPrefix(`/grafana`)
       kind: Rule
       services:
         - name: grafana-service
@@ -16,7 +16,7 @@ spec:
 #      middlewares:
 #        - name: otel-tracing@kubernetescrd@monitoring # <--- ИЗМЕНЕНО: добавлено @monitoring
     # Маршрут для Prometheus
-    - match: Host(`myapps.minipc.local`) || Host(`minipc.local`) && PathPrefix(`/prometheus`)
+    - match: Host(`myapps.archonmac.local`) || Host(`archonmac.local`) && PathPrefix(`/prometheus`)
       kind: Rule
       services:
         - name: prometheus-service

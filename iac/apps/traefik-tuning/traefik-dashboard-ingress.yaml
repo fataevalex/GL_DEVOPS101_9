@@ -9,7 +9,7 @@ spec:
     name: selfsigned-issuer
     kind: ClusterIssuer
   dnsNames:
-    - minipc.local
+    - archonmac.local
 
 ---
 apiVersion: v1
@@ -57,7 +57,7 @@ spec:
     - websecure
   routes:
     # Правило 1: Для основного входа в дашборд по поддиректории
-    - match: Host(`minipc.local`) && PathPrefix(`/traefikadmin`)
+    - match: Host(`archonmac.local`) && PathPrefix(`/traefikadmin`)
       kind: Rule
       middlewares:
         - name: traefik-dashboard-strip-prefix # Удаляем префикс '/traefikadmin'
@@ -70,7 +70,7 @@ spec:
 
     # Правило 2: Для внутренних запросов дашборда (API и статические ресурсы),
     # которые могут делаться по абсолютному пути (без '/traefikadmin')
-    - match: Host(`minipc.local`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+    - match: Host(`archonmac.local`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
       kind: Rule
       middlewares:
         - name: traefik-dashboard-auth # Применяем аутентификацию

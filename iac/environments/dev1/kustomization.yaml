@@ -6,3 +6,4 @@ resources:
   - ../../apps/otel-operator
   - ../../apps/monitoring
   - ../../apps/kbot-otel
+  - ../../apps/traefik-tuning
