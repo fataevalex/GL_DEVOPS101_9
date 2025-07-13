@@ -1,9 +1,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
-  kind: Kustomization
-  metadata:
+kind: Kustomization
+metadata:
     name: flux-system
     namespace: flux-system
-  spec:
+spec:
     decryption:
       provider: sops
       secretRef:
