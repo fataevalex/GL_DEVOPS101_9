@@ -7,4 +7,4 @@ resources:
   - certificates.yaml
   - traefik-dashboard-config.yaml
   - middleware-prometheus-strip.yaml
-#  - traefik-dashboard-ingress.yaml
+  - traefik-dashboard-ingress.yaml
