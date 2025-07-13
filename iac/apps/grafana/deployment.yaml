@@ -21,7 +21,7 @@ spec:
             - name: GF_SERVER_SERVE_FROM_SUB_PATH
               value: "true"
             - name: GF_SERVER_ROOT_URL
-              value: "https://minipc.local/grafana"
+              value: "https://archonmac.local/grafana"
           volumeMounts:
             - name: grafana-storage
               mountPath: /var/lib/grafana

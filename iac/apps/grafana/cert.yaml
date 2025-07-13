@@ -7,9 +7,9 @@ spec:
   issuerRef:
     name: selfsigned-issuer
     kind: ClusterIssuer
-  commonName: minipc.local
+  commonName: archonmac.local
   dnsNames:
-    - minipc.local
+    - archonmac.local
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
