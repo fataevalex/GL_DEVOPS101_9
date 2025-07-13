@@ -7,4 +7,4 @@ kubectl create secret generic kube2iam-aws-credentials \
   --from-literal=AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
   --from-literal=AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION}"
 
-kubectl describe secret generic kube2iam-aws-credentials --namespace flux-system
+kubectl describe secret  kube2iam-aws-credentials --namespace flux-system
