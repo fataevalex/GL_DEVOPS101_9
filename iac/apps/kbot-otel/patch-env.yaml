@@ -11,4 +11,4 @@ spec:
         - name: kbot
           env:
             - name: METRICS_HOST
-              value: "otel-collector.monitoring.svc.cluster.local"
+              value: "otel-collector-collector.monitoring.svc.cluster.local:4317"
