@@ -1,0 +1,31 @@
+# Локальные Terraform файлы состояния
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Автоматические переменные
+*.auto.tfvars
+*.tfvars
+
+# Переменные окружения
+.env
+
+# Логи и временные файлы
+*.log
+crash.log
+terraform.tfplan
+
+# MacOS системные файлы
+.DS_Store
+
+# IDE/Editor configs
+.vscode/
+.idea/
+*.swp
+
+#aws ключи в csv файлах
+*accessKeys.csv
+*unencrypted.yaml
+.gitleaks/
+
