@@ -3,3 +3,7 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
+- ../../../iac/environments/dev1 # Переконайтеся, що цей шлях коректний для вашого середовища
+patchesStrategicMerge:
+    - patch-kustomization-decryption.yaml
+    - patch-kustomize-env.yaml
