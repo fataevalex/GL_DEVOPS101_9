@@ -1,4 +1,4 @@
-# Розгортання стека моніторингового  в кластері kubernetes за допомогою [flux cd](https://fluxcd.io) 
+# Розгортання стека моніторингу  в кластері kubernetes за допомогою [flux cd](https://fluxcd.io) 
 
 Цей репозиторій містить інфраструктурний код для розгортання моніторінгового стека у кластері Kubernetes
 > як шаблон було використано еталонний репозиторій [kbot](https://github.com/den-vasyliev/kbot/tree/opentelemetry/), 
