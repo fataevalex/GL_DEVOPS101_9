@@ -4,6 +4,9 @@
 > як шаблон було використано еталонний репозиторій [kbot](https://github.com/den-vasyliev/kbot/tree/opentelemetry/), 
 > зокрема конфігурація [docker-compose.yaml](https://github.com/den-vasyliev/kbot/blob/opentelemetry/otel/docker-compose.yaml).
 
+
+> **Обмеження:** домен для url grafana захардкожено на **archonmac.local** - це mdns адреса хоста в локальній мережі, 
+> на якому розгорнуто кластер k3d
 ## 📦 Компоненти
 
 Моніторинговий стек включає наступні інструменти:
@@ -178,9 +181,9 @@ resources:
 ```
 
 ### Демо дашборди Grafana. 
-Grafana буде доступна за URL  [https://archonmac/grafana](https://archonmac/grafana)
+Grafana буде доступна за URL  [https://archonmac.local/grafana](https://archonmac.local/grafana)
 
-Prometheus буде доступний за URL [https://archonmac/prometheus](https://archonmac/prometheus)
+Prometheus буде доступний за URL [https://archonmac.local/prometheus](https://archonmac.local/prometheus)
 
 
 ![grafana1](img/grafana1.png)
