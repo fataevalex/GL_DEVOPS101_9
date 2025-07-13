@@ -19,18 +19,18 @@ data:
       - job_name: 'kubelet-cadvisor'
         scheme: https
         metrics_path: /api/v1/nodes/${__param_node}/proxy/metrics/cadvisor
-        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-        tls_config:
-          insecure_skip_verify: true
-        kubernetes_sd_configs:
-          - role: node
-        relabel_configs:
-          - source_labels: [__meta_kubernetes_node_name]
-            target_label: __param_node
-          - source_labels: [__param_node]
-            target_label: node
-          - target_label: __address__
-            replacement: kubernetes.default.svc:443
+    #    bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+    #    tls_config:
+    #      insecure_skip_verify: true
+    #    kubernetes_sd_configs:
+    #      - role: node
+    #    relabel_configs:
+    #      - source_labels: [__meta_kubernetes_node_name]
+    #        target_label: __param_node
+    #      - source_labels: [__param_node]
+    #        target_label: node
+    #      - target_label: __address__
+    #        replacement: kubernetes.default.svc:443
 
 
       - job_name: 'kubernetes-pods'
