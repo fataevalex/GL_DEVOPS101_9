@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: kbot-src
+spec:
+  interval: 5m
+  url: https://github.com/den-vasyliev/kbot.git
+  ref:
+    branch: opentelemetry

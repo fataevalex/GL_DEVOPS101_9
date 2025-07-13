@@ -1,0 +1,14 @@
+# deployment-patch.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kbot
+  namespace: kbot-otel-flux
+spec:
+  template:
+    spec:
+      containers:
+        - name: kbot
+          env:
+            - name: METRICS_HOST
+              value: "otel-collector.monitoring.svc.cluster.local"

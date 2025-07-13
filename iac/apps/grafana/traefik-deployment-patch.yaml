@@ -1,0 +1,13 @@
+# kubernetes/patches/traefik-deployment-patch.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: traefik
+          args:
+            - --entrypoints.websecure.address=:8443/tcp

@@ -1,0 +1,28 @@
+# kubernetes/patches/traefik-port-patch.yaml
+# Патч для Deployment Traefik (kube-system)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: traefik
+          args:
+            # Обновляем или добавляем аргумент для websecure entrypoint
+            - --entrypoints.websecure.address=:8443/tcp
+---
+# Патч для Service Traefik (kube-system)
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  ports:
+    # Обновляем порт websecure
+    - name: websecure
+      port: 8443
+      targetPort: 8443

@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluent-bit-config
+  namespace: monitoring
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+        Flush        1
+        Daemon       Off
+        Log_Level    info
+        Parsers_File parsers.conf
+        storage.path /buffers
+
+    [INPUT]
+        Name              tail
+        Path              /var/log/containers/*.log
+        Tag               kube.*
+        Parser            cri
+        Refresh_Interval  5
+        Rotate_Wait       30
+        Mem_Buf_Limit     50MB
+        Skip_Long_Lines   On
+        storage.type      filesystem
+        Path_Key          log_path
+    # Поддержка склеивания логов (например, многострочных stacktrace)
+    [FILTER]
+        Name                multiline
+        Match               kube.*
+        multiline.parser    docker, cri
+    # Kubernetes метаданные
+    [FILTER]
+        Name                kubernetes
+        Match               kube.*
+        Kube_URL            https://kubernetes.default.svc:443
+        Merge_Log           On
+        Merge_Log_Trim      On
+        Keep_Log            On
+        Annotations         Off
+        Labels              On
+    # Переименуем "log" в "body", чтобы OTEL Collector не делал обёртку Str(log)
+    [FILTER]
+        Name modify
+        Match *
+        Rename log body
+    
+    
+    [OUTPUT]
+        Name                             opentelemetry
+        Match                            *
+        Host                             otel-collector-collector.monitoring.svc.cluster.local
+        Port                             4318
+        tls                              Off
+        logs_uri                         /v1/logs
+        logs_body_key                    body
+        logs_severity_text_message_key  severity
+        logs_severity_number_message_key severity_number
+        logs_timestamp_metadata_key     timestamp
+        logs_trace_id_metadata_key      trace_id
+        logs_span_id_metadata_key       span_id
+        logs_trace_flags_metadata_key   trace_flags
+        log_response_payload             true
+
+#    [OUTPUT]
+#        Name file
+#        Match *
+#        Path   /fluentbit-debug/
+#        File   fluentbit.out
+
+        
+
+#    [OUTPUT]
+#        Name stdout
+#        Match *
+#        Format json
+
+#    [OUTPUT]
+#        name            loki
+#        match           *
+#        host            loki-service.monitoring.svc.cluster.local
+#        port            3100
+#        uri             /loki/api/v1/push
+#        tls             off
+#        log_level       info
+#        labels          job=fluentbit
+#        auto_kubernetes_labels  off
+#        line_format     json
+#        remove_keys     kubernetes,stream,time
+
+  parsers.conf: |
+    [PARSER]
+        Name cri
+        Format regex
+        Regex ^(?<time>.+) (?<stream>stdout|stderr) (?<logtag>F|P) (?<log>.*)$
+        Time_Key time
+        Time_Format %Y-%m-%dT%H:%M:%S.%L%z

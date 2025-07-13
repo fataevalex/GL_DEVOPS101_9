@@ -1,0 +1,27 @@
+# iac/apps/traefik-tuning/middlewares-tracing.yaml
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: otel-tracing
+  namespace: monitoring
+spec: {}
+# opentelemetry: # <--- Эта секция закомментирована, так как не поддерживается текущей CRD
+#   address: otel-collector.monitoring.svc.cluster.local:4317
+#   protocol: grpc
+#   propagators:
+#     - tracecontext
+#     - b3
+#
+# Примечание:
+# Если вы хотите использовать OpenTelemetry с Traefik через Middleware,
+# вам потребуется обновить CRD Traefik в вашем кластере до версии,
+# которая явно включает поле `opentelemetry` в схему Middleware.
+# Возможно, потребуется переустановить или обновить Traefik с его CRD.
+#
+# В качестве временного решения, если вы все еще хотите добавить кастомные заголовки для трассировки,
+# вы можете использовать Middleware типа `headers`, но это не то же самое, что встроенная интеграция OpenTelemetry.
+# Например:
+# headers:
+#   customRequestHeaders:
+#     X-B3-Sampled: "1"
+#     X-B3-Flags: "1"

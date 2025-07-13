@@ -1,0 +1,11 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    additionalArguments:
+      - "--api.dashboard.router.path=/traefikadmin/"
+      - "--api.dashboard=true"
+      - "--api.insecure=true" # Это позволит получить доступ к дашборду без настройки IngressRoute, используя только port-forward.

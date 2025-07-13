@@ -1,0 +1,11 @@
+# kubernetes/patches/traefik-service-patch.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  ports:
+    - name: websecure
+      port: 8443
+      targetPort: 8443

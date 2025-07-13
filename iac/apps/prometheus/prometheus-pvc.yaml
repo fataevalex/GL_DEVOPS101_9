@@ -1,0 +1,13 @@
+# iac/apps/monitoring/prometheus/prometheus-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-pvc
+  namespace: monitoring # Убедитесь, что это namespace monitoring
+spec:
+  accessModes:
+    - ReadWriteOnce # Для Prometheus обычно достаточно ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi # Рекомендуется начать с 5Gi или 10Gi, так как метрики занимают место
+  # storageClassName: standard # Опционально: укажите ваш StorageClass, если у вас нет дефолтного

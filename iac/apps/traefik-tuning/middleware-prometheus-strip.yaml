@@ -1,0 +1,11 @@
+# iac/apps/monitoring/traefik-middleware-prometheus-strip.yaml
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: prometheus-strip-prefix # Имя вашего Middleware
+  namespace: monitoring
+spec:
+  stripPrefix:
+    prefixes:
+      - /prometheus # Удалить этот префикс из URL
+    forceSlash: false # Не добавлять слеш в конце, если его нет

@@ -1,0 +1,4 @@
+resources:
+  - fluent-bit-ca.yaml
+  - fluent-bit-config.yaml
+  - fluent-bit-deploment.yaml

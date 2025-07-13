@@ -1,0 +1,17 @@
+# kubernetes/base/grafana-ingressroute.yaml
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana-ingressroute
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`grafana.local`)
+      kind: Rule
+      services:
+        - name: grafana-service
+          port: http # Или 3000, если это порт сервиса Grafana
+  tls:
+    secretName: minipc-selfsigned-tls
+

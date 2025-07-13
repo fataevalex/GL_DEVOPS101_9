@@ -1,0 +1,10 @@
+# iac/apps/traefik-tuning/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - middlewares-tracing.yaml
+  - ingressroutes.yaml
+  - certificates.yaml
+  - traefik-dashboard-config.yaml
+  - middleware-prometheus-strip.yaml
+#  - traefik-dashboard-ingress.yaml

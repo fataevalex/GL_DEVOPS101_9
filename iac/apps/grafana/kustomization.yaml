@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+#  - namespace.yaml
+  - cert.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+  - grafana-pvc.yaml
+  - grafana-datasource.yaml
+  - grafana-dashboard-provisioning.yaml
+patches:
+  - path: traefik-deployment-patch.yaml # Новый путь
+    target:
+      kind: Deployment
+      name: traefik
+      namespace: kube-system
+  - path: traefik-service-patch.yaml    # Новый путь
+    target:
+      kind: Service
+      name: traefik
+      namespace: kube-system
+
+configMapGenerator:
+  - name: grafana-dashboards-list # Это будет имя сгенерированного ConfigMap
+    files:
+      - dashboards/1860_rev41.json
+      - dashboards/17347_rev9.json
+    options:
+      labels:
+        grafana_dashboard: "1" # Необязательная метка для удобства

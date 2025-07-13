@@ -1,0 +1,17 @@
+# iac/apps/monitoring/grafana/grafana-dashboard-provisioning.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-provisioning # Имя ConfigMap
+data:
+  dashboards.yaml: | # Имя файла, которое будет создано внутри пода Grafana
+    apiVersion: 1
+    providers:
+      - name: 'Default Kubernetes Dashboards' # Имя провайдера в Grafana UI
+        orgId: 1
+        folder: '' # Оставьте пустым, чтобы дашборды были в корневой папке, или укажите имя папки
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards-json

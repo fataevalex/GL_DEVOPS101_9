@@ -1,0 +1,43 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: myapps-minipc-local-cert # Имя ресурса Certificate
+  namespace: monitoring
+spec:
+  secretName: myapps-minipc-local-tls # Имя секрета, который будет создан Traefik (должно совпадать с IngressRoute)
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  isCA: false
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+  dnsNames:
+    - myapps.minipc.local # <--- Домен для сертификата
+    - minipc.local
+  issuerRef:
+    name: selfsigned-issuer # <--- Имя вашего ClusterIssuer (selfsigned-issuer)
+    kind: ClusterIssuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: loki-minipc-local-cert # Имя ресурса Certificate
+  namespace: monitoring
+spec:
+  secretName: loki-minipc-local-tls # Имя секрета, который будет создан Traefik (должно совпадать с IngressRoute)
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  isCA: false
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+  dnsNames:
+    - loki.minipc.local # <--- Домен для сертификата
+  issuerRef:
+    name: selfsigned-issuer # <--- Имя вашего ClusterIssuer (selfsigned-issuer)
+    kind: ClusterIssuer
+    group: cert-manager.io

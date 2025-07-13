@@ -1,0 +1,41 @@
+# iac/apps/monitoring/grafana/grafana-datasource-prometheus.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasources # Имя ConfigMap
+  namespace: monitoring             # Должно совпадать с namespace Grafana
+data:
+  # --- Конфигурация для Prometheus Datasource ---
+  prometheus.yaml: | # <--- Имя файла для Prometheus Datasource внутри ConfigMap
+    apiVersion: 1
+    datasources:
+      - name: Prometheus # Имя источника данных в Grafana UI
+        type: prometheus
+        access: proxy
+        # Правильный внутренний URL сервиса Prometheus
+        url: http://prometheus-service.monitoring:9090/prometheus
+        isDefault: false # Не делаем его по умолчанию, так как Loki будет по умолчанию для логов
+        editable: true # Разрешить редактирование через UI Grafana
+        version: 1
+
+  # --- Конфигурация для Loki Datasource ---
+  loki.yaml: | # <--- Имя файла для Loki Datasource внутри ConfigMap
+    apiVersion: 1
+    datasources:
+      - name: Loki # Имя источника данных в Grafana UI
+        type: loki
+        access: proxy
+        # Правильный внутренний URL сервиса Loki
+        url: http://loki-service.monitoring.svc.cluster.local:3100
+        isDefault: true # Делаем этот источник данных по умолчанию для логов
+        editable: true # Разрешить редактирование через UI Grafana
+        version: 1
+        # Настройки авторизации (закомментированы, если auth_enabled: false в Loki)
+        # basicAuth: false
+        # basicAuthUser:
+        # basicAuthPassword:
+        # withCredentials: false
+        # jsonData:
+        #   tlsSkipVerify: true
+        #   tlsAuth: false
+        #   tlsAuthWithCACert: false

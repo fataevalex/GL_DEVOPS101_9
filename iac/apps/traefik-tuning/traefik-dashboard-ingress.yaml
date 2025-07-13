@@ -1,0 +1,82 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: traefik-dashboard-tls
+  namespace: kube-system
+spec:
+  secretName: traefik-dashboard-tls-secret
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - minipc.local
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: traefik-dashboard-auth
+  namespace: kube-system
+type: Opaque
+stringData:
+  # Вставьте сюда вашу htpasswd строку для пароля
+  # Например: 'admin:$apr1$D7Vf1a4e$cO/3q5/0bM3.f7.S5'
+  users: 'admin:$apr1$$r4E2MPpWO3P8QVlY3SGKi0'
+
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-dashboard-auth
+  namespace: kube-system
+spec:
+  basicAuth:
+    secret: traefik-dashboard-auth
+    removeHeader: true
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-dashboard-strip-prefix
+  namespace: kube-system
+spec:
+  stripPrefix:
+    prefixes:
+      - /traefikadmin
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard-ingressroute
+  namespace: kube-system
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    # Правило 1: Для основного входа в дашборд по поддиректории
+    - match: Host(`minipc.local`) && PathPrefix(`/traefikadmin`)
+      kind: Rule
+      middlewares:
+        - name: traefik-dashboard-strip-prefix # Удаляем префикс '/traefikadmin'
+          namespace: kube-system
+        - name: traefik-dashboard-auth
+          namespace: kube-system
+      services:
+        - name: api@internal # Направляем на внутренний сервис Traefik API/Dashboard
+          kind: TraefikService
+
+    # Правило 2: Для внутренних запросов дашборда (API и статические ресурсы),
+    # которые могут делаться по абсолютному пути (без '/traefikadmin')
+    - match: Host(`minipc.local`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      kind: Rule
+      middlewares:
+        - name: traefik-dashboard-auth # Применяем аутентификацию
+          namespace: kube-system
+      services:
+        - name: api@internal # Направляем напрямую на api@internal
+          kind: TraefikService
+  tls:
+    secretName: traefik-dashboard-tls-secret
