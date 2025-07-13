@@ -1,11 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: fluent-bit
   labels:
     app: fluent-bit
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: fluent-bit
